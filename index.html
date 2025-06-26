@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Обучение нейросетям — Старт</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <style>
+        .start-button {
+            margin-top: 38rem;
+        }
+    </style>
+    <style>
+        .start-button {
+            margin-top: 20rem;
+        }
+    </style>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .start-screen {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        .logo-ai-animated {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 48px auto 64px auto;
+        }
+        .neon-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #ff8c00;
+            box-shadow: 0 0 30px #ff8c00, 0 0 60px #ff8c00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: glow 3s infinite alternate, rotate 6s infinite linear;
+        }
+        .logo-ai-letters {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ff8c00;
+            text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff8c00;
+            letter-spacing: 0.2em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: ai-fade 2s infinite alternate;
+        }
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px #ff8c00, 0 0 20px #ff8c00;
+                border-color: #ff8c00;
+            }
+            100% {
+                box-shadow: 0 0 40px #ff8c00, 0 0 80px #ff8c00;
+                border-color: #ffa500;
+            }
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes ai-fade {
+            0% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        .start-title {
+            font-size: 3.5rem;
+            margin: 0 0 0.5rem;
+            color: #ff8c00;
+            text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff8c00;
+            animation: fadeIn 1s ease-in;
+            font-weight: bold;
+        }
+        .start-subtitle {
+            font-size: 1.7rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            animation: fadeIn 1.5s ease-in;
+            font-weight: bold;
+            color: #ff8c00;
+            text-shadow: 0 0 10px #ff8c00;
+        }
+        .start-description {
+            font-size: 1.3rem;
+            color: #ccc;
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+        }
+        .start-button {
+            display: inline-block;
+            padding: 1.2rem 2.6rem;
+            background: #ff8c00;
+            color: #000;
+            border: none;
+            border-radius: 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background 0.3s, box-shadow 0.3s;
+            animation: pulseBig 2s infinite;
+            box-shadow: 0 4px 24px 0 #ff8c0033;
+            margin-top: 1.5rem;
+        }
+        .start-button:hover {
+            background: #ffa500;
+            box-shadow: 0 0 30px #ff8c00;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes pulseBig {
+            0% { transform: scale(1); box-shadow: 0 0 10px #ff8c00; }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px #ff8c00; }
+            100% { transform: scale(1); box-shadow: 0 0 10px #ff8c00; }
+        }
+    </style>
+</head>
+<body>
+    <div class="start-screen">
+        <h1 class="start-title">Обучение нейросетям</h1>
+        <div class="start-subtitle">Практический курс для начинающих</div>
+        <div class="logo-ai-animated">
+            <div class="neon-circle">
+                <span class="logo-ai-letters">AI</span>
+            </div>
+        </div>
+        <a href="main.html" class="start-button">Старт</a>
+    </div>
+</body>
+</html>

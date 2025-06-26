@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Обучение нейросетям</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(90deg, #000 0%, #111 100%);
+            color: #ff8c00;
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 2px solid #ff8c00;
+        }
+        .header-title {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff8c00;
+            animation: fadeIn 1s ease-in;
+        }
+        .header-subtitle {
+            margin: 0.5rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease-in;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            flex-grow: 1;
+        }
+        .item {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+            border-radius: 15px;
+            box-shadow: 0 0 10px #ff8c00;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff8c00;
+        }
+        .item-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #ff8c00;
+        }
+        .item-title {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .bottom-menu {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem 0;
+            background: #111;
+        }
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ff8c00;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .menu-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">Обучение нейросетям</h1>
+        <p class="header-subtitle">Практический курс для начинающих</p>
+    </header>
+    <main class="container">
+        <div class="item">
+            <div class="item-icon">🧠</div>
+            <div class="item-title">Нейросети</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">🤖</div>
+            <div class="item-title">Искусственный интеллект</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">📊</div>
+            <div class="item-title">Анализ данных</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">💡</div>
+            <div class="item-title">Практика</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">🎓</div>
+            <div class="item-title">Обучение</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">📱</div>
+            <div class="item-title">Мобильность</div>
+        </div>
+    </main>
+    <div class="bottom-menu">
+        <a href="#" class="menu-item">
+            <div class="menu-icon">🏠</div>
+            <div>Главная</div>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="menu-icon">🎓</div>
+            <div>Обучение</div>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="menu-icon">👥</div>
+            <div>Сообщество</div>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="menu-icon">💬</div>
+            <div>Чат</div>
+        </a>
+    </div>
+</body>
+</html>
