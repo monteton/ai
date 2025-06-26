@@ -1,194 +1,265 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Обучение нейросетям</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background: #000;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .header {
-            background: linear-gradient(90deg, #000 0%, #111 100%);
-            color: #ff8c00;
-            text-align: center;
-            padding: 2rem 0;
-            border-bottom: 2px solid #ff8c00;
-        }
-        .header-title {
-            margin: 0;
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff8c00;
-            animation: fadeIn 1s ease-in;
-        }
-        .header-subtitle {
-            margin: 0.5rem 0 0;
-            font-size: 1.2rem;
-            opacity: 0.8;
-            animation: fadeIn 1.5s ease-in;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            padding: 2rem;
-            flex-grow: 1;
-        }
-        .item {
-            width: 120px;
-            height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: #222;
-            border-radius: 15px;
-            box-shadow: 0 0 10px #ff8c00;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px #ff8c00;
-        }
-        .item-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-            color: #ff8c00;
-        }
-        .item-title {
-            font-size: 0.9rem;
-            text-align: center;
-        }
-        .bottom-menu {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 1rem 0;
-            background: #111;
-        }
-        .menu-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #ff8c00;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .menu-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        /* --- Мобильная адаптация --- */
-        @media (max-width: 700px) {
-            .container {
-                gap: 1rem;
-                padding: 1rem 0.5rem;
-            }
-            .item {
-                width: 95px;
-                height: 95px;
-            }
-        }
-        @media (max-width: 500px) {
-            .header {
-                padding: 1rem 0.2rem;
-            }
-            .header-title {
-                font-size: 1.4rem;
-            }
-            .header-subtitle {
-                font-size: 0.9rem;
-            }
-            .container {
-                gap: 0.7rem;
-                padding: 0.5rem 0.2rem;
-            }
-            .item {
-                width: 70px;
-                height: 70px;
-                border-radius: 10px;
-            }
-            .item-icon {
-                font-size: 22px;
-                margin-bottom: 5px;
-            }
-            .item-title {
-                font-size: 0.7rem;
-            }
-            .bottom-menu {
-                gap: 1rem;
-                padding: 0.5rem 0;
-            }
-            .menu-icon {
-                font-size: 18px;
-            }
-            .menu-item {
-                font-size: 0.7rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Модули курса SMM</title>
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      font-family: sans-serif;
+      color: #B61A44;
+      position: relative;
+    }
+    .ocean { 
+      height: 5%;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: #015871;
+    }
+    .wave {
+      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x; 
+      position: absolute;
+      top: -198px;
+      width: 6400px;
+      height: 198px;
+      animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+      transform: translate3d(0, 0, 0);
+    }
+    .wave:nth-of-type(2) {
+      top: -175px;
+      animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+      opacity: 1;
+    }
+    @keyframes wave {
+      0% { margin-left: 0; }
+      100% { margin-left: -1600px; }
+    }
+    @keyframes swell {
+      0%, 100% { transform: translate3d(0,-25px,0); }
+      50% { transform: translate3d(0,5px,0); }
+    }
+    h1 {
+      text-align: center;
+      font-family: 'Lobster', sans-serif;
+      font-size: 15vw;
+      margin: 2rem 0 1rem;
+      animation: wobble 5s linear infinite;
+      z-index: 10;
+      position: relative;
+    }
+    @keyframes wobble {
+      0% { transform: scale(0.9); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(0.9); }
+    }
+    .course-name {
+      font-size: 1.3rem;
+      text-align: center;
+      margin: 0 0 2rem;
+      z-index: 10;
+      position: relative;
+      color: #B61A44;
+      opacity: 0.9;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.4;
+    }
+    .modules {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      padding-bottom: 8rem;
+      position: relative;
+      z-index: 10;
+      overflow-y: auto;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .module {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 450px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: center;
+    }
+    .module:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+    .module h2 {
+      color: #B61A44;
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+    .module p {
+      color: #333;
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+    .bottom-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #015871;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 0;
+    }
+    .menu-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 0.3rem 0;
+      width: 100%;
+    }
+    .menu-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #B61A44;
+      color: #fff;
+      border: none;
+      border-radius: 15px;
+      padding: 0.6rem 0.8rem;
+      min-width: 120px;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    .menu-button:hover {
+      background: #D12C5C;
+      box-shadow: 0 0 8px #B61A44;
+    }
+    .menu-button i {
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+    .menu-button span {
+      font-size: 0.7rem;
+    }
+    /* --- Мобильная адаптация --- */
+    @media (max-width: 600px) {
+      .start-screen, .modules {
+        padding: 0.8rem 1rem;
+      }
+      h1 {
+        font-size: 2.5rem;
+        margin: 1rem 0 0.5rem;
+      }
+      .course-name {
+        font-size: 1rem;
+        margin: 0 0 1.5rem;
+      }
+      .module {
+        padding: 1rem;
+        margin-bottom: 0.8rem;
+      }
+      .module h2 {
+        font-size: 1.1rem;
+      }
+      .module p {
+        font-size: 0.9rem;
+      }
+      .menu-button {
+        min-width: 100px;
+        padding: 0.5rem 0.7rem;
+      }
+      .menu-button i {
+        font-size: 1rem;
+      }
+      .menu-button span {
+        font-size: 0.65rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header class="header">
-        <h1 class="header-title">Обучение нейросетям</h1>
-        <p class="header-subtitle">Практический курс для начинающих</p>
-    </header>
-    <main class="container">
-        <div class="item">
-            <div class="item-icon">🧠</div>
-            <div class="item-title">Нейросети</div>
-        </div>
-        <div class="item">
-            <div class="item-icon">🤖</div>
-            <div class="item-title">Искусственный интеллект</div>
-        </div>
-        <div class="item">
-            <div class="item-icon">📊</div>
-            <div class="item-title">Анализ данных</div>
-        </div>
-        <div class="item">
-            <div class="item-icon">💡</div>
-            <div class="item-title">Практика</div>
-        </div>
-        <div class="item">
-            <div class="item-icon">🎓</div>
-            <div class="item-title">Обучение</div>
-        </div>
-        <div class="item">
-            <div class="item-icon">📱</div>
-            <div class="item-title">Мобильность</div>
-        </div>
-    </main>
-    <div class="bottom-menu">
-        <a href="#" class="menu-item">
-            <div class="menu-icon">🏠</div>
-            <div>Главная</div>
-        </a>
-        <a href="#" class="menu-item">
-            <div class="menu-icon">🎓</div>
-            <div>Обучение</div>
-        </a>
-        <a href="#" class="menu-item">
-            <div class="menu-icon">👥</div>
-            <div>Сообщество</div>
-        </a>
-        <a href="#" class="menu-item">
-            <div class="menu-icon">💬</div>
-            <div>Чат</div>
-        </a>
+  <h1>SMM</h1>
+  <div class="course-name">
+    Модули курса: продвижение в соцсетях и Telegram, создание контент-стратегий
+  </div>
+  <div class="modules">
+    <div class="module">
+      <h2>Продвижение в соцсетях</h2>
+      <p>Освойте инструменты для роста аудитории в Instagram, TikTok и других платформах</p>
     </div>
+    <div class="module">
+      <h2>Продвижение в Telegram</h2>
+      <p>Научитесь запускать каналы и чаты, привлекать подписчиков и монетизировать</p>
+    </div>
+    <div class="module">
+      <h2>Создание контент-стратегий</h2>
+      <p>Разработайте планы публикаций и увеличьте вовлечённость аудитории</p>
+    </div>
+    <div class="module">
+      <h2>Аналитика и отчётность</h2>
+      <p>Научитесь измерять эффективность ваших кампаний и делать выводы</p>
+    </div>
+    <div class="module">
+      <h2>Работа с аудиторией</h2>
+      <p>Узнайте, как взаимодействовать с подписчиками и увеличивать лояльность</p>
+    </div>
+    <div class="module">
+      <h2>Монетизация</h2>
+      <p>Научитесь зарабатывать на своих сообществах и проектах</p>
+    </div>
+  </div>
+  <div class="bottom-menu">
+    <div class="menu-row">
+      <a href="index.html" class="menu-button">
+        <i class="fas fa-home"></i>
+        <span>Главная</span>
+      </a>
+      <a href="#" class="menu-button">
+        <i class="fas fa-book"></i>
+        <span>Обучение</span>
+      </a>
+    </div>
+    <div class="menu-row">
+      <a href="#" class="menu-button">
+        <i class="fas fa-users"></i>
+        <span>Сообщество</span>
+      </a>
+      <a href="#" class="menu-button">
+        <i class="fas fa-comment"></i>
+        <span>Чат</span>
+      </a>
+    </div>
+    <div class="menu-row">
+      <a href="#" class="menu-button">
+        <i class="fas fa-chart-line"></i>
+        <span>Аналитика</span>
+      </a>
+      <a href="#" class="menu-button">
+        <i class="fas fa-cog"></i>
+        <span>Настройки</span>
+      </a>
+    </div>
+  </div>
+  <div class="ocean">
+    <div class="wave"></div>
+    <div class="wave wave-2"></div>
+  </div>
 </body>
 </html>
