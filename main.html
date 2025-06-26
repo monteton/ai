@@ -1,105 +1,174 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Нейросети и ИИ</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #0a0a12;
-      color: #e0e0ff;
-      min-height: 100vh;
-    }
-    .container {
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px 10px;
-      box-sizing: border-box;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .header h1 {
-      color: #00f7ff;
-      text-shadow: 0 0 8px rgba(0, 247, 255, 0.5);
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 16px;
-      margin-bottom: 30px;
-    }
-    .card {
-      background: rgba(20, 20, 40, 0.7);
-      border: 1px solid #00f7ff;
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-      font-size: 16px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 12px rgba(0, 247, 255, 0.3);
-    }
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .menu-item {
-      background: linear-gradient(135deg, #00f7ff, #0051ff);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      font-size: 18px;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0, 247, 255, 0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .menu-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 247, 255, 0.4);
-    }
-    @media (max-width: 480px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      .menu-item {
-        font-size: 20px;
-        padding: 18px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Обучение нейросетям</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background: linear-gradient(90deg, #000 0%, #111 100%);
+            color: #ff8c00;
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 2px solid #ff8c00;
+        }
+        .header-title {
+            margin: 0;
+            font-size: 2rem;
+            text-shadow: 0 0 10px #ff8c00, 0 0 20px #ff8c00;
+            animation: fadeIn 1s ease-in;
+        }
+        .header-subtitle {
+            margin: 0.5rem 0 0;
+            font-size: 1rem;
+            opacity: 0.8;
+            animation: fadeIn 1.5s ease-in;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            flex-grow: 1;
+        }
+        .item {
+            width: calc(50% - 2rem);
+            max-width: 160px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+            border-radius: 15px;
+            box-shadow: 0 0 10px #ff8c00;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin: 0.5rem;
+        }
+        .item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff8c00;
+        }
+        .item-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #ff8c00;
+        }
+        .item-title {
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 0 8px;
+            box-sizing: border-box;
+            word-break: break-word;
+        }
+        .bottom-menu {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem 0;
+            background: #111;
+            flex-wrap: wrap;
+        }
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #ff8c00;
+            text-decoration: none;
+            font-size: 0.9rem;
+            min-width: 60px;
+            margin: 0.5rem 0;
+        }
+        .menu-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 600px) {
+            .container {
+                gap: 1rem;
+                padding: 1rem;
+            }
+            .item {
+                width: calc(50% - 1rem);
+                height: 100px;
+                margin: 0.25rem;
+            }
+            .header-title {
+                font-size: 1.6rem;
+            }
+            .header-subtitle {
+                font-size: 0.9rem;
+            }
+            .bottom-menu {
+                gap: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Нейросети и ИИ</h1>
+    <header class="header">
+        <h1 class="header-title">Обучение нейросетям</h1>
+        <p class="header-subtitle">Практический курс для начинающих</p>
+    </header>
+    <main class="container">
+        <div class="item">
+            <div class="item-icon">🧠</div>
+            <div class="item-title">Нейросети</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">🤖</div>
+            <div class="item-title">Искусственный интеллект</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">📊</div>
+            <div class="item-title">Анализ данных</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">💡</div>
+            <div class="item-title">Практика</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">🎓</div>
+            <div class="item-title">Обучение</div>
+        </div>
+        <div class="item">
+            <div class="item-icon">📱</div>
+            <div class="item-title">Мобильность</div>
+        </div>
+    </main>
+    <div class="bottom-menu">
+        <a href="#" class="menu-item">
+            <div class="menu-icon">🏠</div>
+            <div>Главная</div>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="menu-icon">🎓</div>
+            <div>Обучение</div>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="menu-icon">👥</div>
+            <div>Сообщество</div>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="menu-icon">💬</div>
+            <div>Чат</div>
+        </a>
     </div>
-    <div class="grid">
-      <div class="card">Искусственный интеллект</div>
-      <div class="card">Анализ данных</div>
-      <div class="card">Практика</div>
-      <div class="card">Обучение</div>
-      <div class="card">Мобильность</div>
-    </div>
-    <div class="menu">
-      <a href="#" class="menu-item">Главная</a>
-      <a href="#" class="menu-item">Обучение</a>
-      <a href="#" class="menu-item">Сообщество</a>
-      <a href="#" class="menu-item">Чат</a>
-    </div>
-  </div>
 </body>
 </html>
