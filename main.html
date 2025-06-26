@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Обучение нейросетям</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
     <style>
@@ -89,6 +90,54 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+        /* --- Мобильная адаптация --- */
+        @media (max-width: 700px) {
+            .container {
+                gap: 1rem;
+                padding: 1rem 0.5rem;
+            }
+            .item {
+                width: 95px;
+                height: 95px;
+            }
+        }
+        @media (max-width: 500px) {
+            .header {
+                padding: 1rem 0.2rem;
+            }
+            .header-title {
+                font-size: 1.4rem;
+            }
+            .header-subtitle {
+                font-size: 0.9rem;
+            }
+            .container {
+                gap: 0.7rem;
+                padding: 0.5rem 0.2rem;
+            }
+            .item {
+                width: 70px;
+                height: 70px;
+                border-radius: 10px;
+            }
+            .item-icon {
+                font-size: 22px;
+                margin-bottom: 5px;
+            }
+            .item-title {
+                font-size: 0.7rem;
+            }
+            .bottom-menu {
+                gap: 1rem;
+                padding: 0.5rem 0;
+            }
+            .menu-icon {
+                font-size: 18px;
+            }
+            .menu-item {
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
