@@ -109,6 +109,8 @@
             animation: pulseBig 2s infinite;
             box-shadow: 0 4px 24px 0 #ff8c0033;
             margin-top: 1.5rem;
+            width: 90%;
+            max-width: 300px;
         }
         .start-button:hover {
             background: #ffa500;
@@ -125,14 +127,38 @@
         }
         /* --- Мобильная адаптация --- */
         @media (max-width: 600px) {
-            .start-title { font-size: 2rem; }
-            .start-subtitle { font-size: 1.1rem; }
-            .start-description { font-size: 1rem; }
-            .logo-ai-animated, .neon-circle { margin: 24px auto 32px auto; }
-            .neon-circle { width: 90px; height: 90px; }
-            .logo-ai-letters { font-size: 2rem; }
-            .start-button { font-size: 1.1rem; padding: 0.9rem 1.5rem; margin-top: 1rem; }
-            .start-screen { padding: 1rem; }
+            .start-screen {
+                padding: 0.8rem 1rem;
+            }
+            .start-title {
+                font-size: 2rem;
+                margin: 0 0 0.3rem;
+            }
+            .start-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 0.5rem;
+            }
+            .start-description {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .logo-ai-animated, .neon-circle {
+                margin: 16px auto 24px auto;
+            }
+            .neon-circle {
+                width: 90px;
+                height: 90px;
+            }
+            .logo-ai-letters {
+                font-size: 2rem;
+            }
+            .start-button {
+                font-size: 1.1rem;
+                padding: 0.9rem 1.5rem;
+                margin-top: 1rem;
+                width: 90%;
+                max-width: 250px;
+            }
         }
     </style>
 </head>
