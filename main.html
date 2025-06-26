@@ -3,263 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Модули курса по нейросетям</title>
-  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Нейросети и ИИ</title>
   <style>
-    html, body { height: 100%; margin: 0; }
     body {
-      background: radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      font-family: sans-serif;
-      color: #B61A44;
-      position: relative;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0a0a12;
+      color: #e0e0ff;
+      min-height: 100vh;
     }
-    .ocean { 
-      height: 5%;
+    .container {
       width: 100%;
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      background: #015871;
-    }
-    .wave {
-      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x; 
-      position: absolute;
-      top: -198px;
-      width: 6400px;
-      height: 198px;
-      animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
-      transform: translate3d(0, 0, 0);
-    }
-    .wave:nth-of-type(2) {
-      top: -175px;
-      animation: wave 7s cubic-bezier(0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
-      opacity: 1;
-    }
-    @keyframes wave {
-      0% { margin-left: 0; }
-      100% { margin-left: -1600px; }
-    }
-    @keyframes swell {
-      0%, 100% { transform: translate3d(0,-25px,0); }
-      50% { transform: translate3d(0,5px,0); }
-    }
-    h1 {
-      text-align: center;
-      font-family: 'Lobster', sans-serif;
-      font-size: 15vw;
-      margin: 2rem 0 1rem;
-      animation: wobble 5s linear infinite;
-      z-index: 10;
-      position: relative;
-    }
-    @keyframes wobble {
-      0% { transform: scale(0.9); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(0.9); }
-    }
-    .course-name {
-      font-size: 1.3rem;
-      text-align: center;
-      margin: 0 0 2rem;
-      z-index: 10;
-      position: relative;
-      color: #B61A44;
-      opacity: 0.9;
-      max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.4;
-    }
-    .modules {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      padding-bottom: 8rem;
-      position: relative;
-      z-index: 10;
-      overflow-y: auto;
       max-width: 600px;
       margin: 0 auto;
+      padding: 20px 10px;
+      box-sizing: border-box;
     }
-    .module {
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 15px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 90%;
-      max-width: 450px;
-      transition: transform 0.3s, box-shadow 0.3s;
+    .header {
       text-align: center;
+      margin-bottom: 30px;
     }
-    .module:hover {
-      transform: scale(1.02);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    .header h1 {
+      color: #00f7ff;
+      text-shadow: 0 0 8px rgba(0, 247, 255, 0.5);
+      font-size: 28px;
+      margin-bottom: 10px;
     }
-    .module h2 {
-      color: #B61A44;
-      margin-top: 0;
-      font-size: 1.3rem;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
     }
-    .module p {
-      color: #333;
-      margin-bottom: 0;
-      font-size: 1rem;
+    .card {
+      background: rgba(20, 20, 40, 0.7);
+      border: 1px solid #00f7ff;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      font-size: 16px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .bottom-menu {
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 247, 255, 0.3);
+    }
+    .menu {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      background: #015871;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 20;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-      padding: 0.5rem 0;
+      gap: 12px;
     }
-    .menu-row {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin: 0.3rem 0;
-      width: 100%;
-    }
-    .menu-button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: #B61A44;
+    .menu-item {
+      background: linear-gradient(135deg, #00f7ff, #0051ff);
       color: #fff;
       border: none;
-      border-radius: 15px;
-      padding: 0.6rem 0.8rem;
-      min-width: 120px;
-      font-size: 0.8rem;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      font-size: 18px;
       text-decoration: none;
-      transition: background 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 247, 255, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .menu-button:hover {
-      background: #D12C5C;
-      box-shadow: 0 0 8px #B61A44;
+    .menu-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 247, 255, 0.4);
     }
-    .menu-button i {
-      font-size: 1.2rem;
-      margin-bottom: 0.3rem;
-    }
-    .menu-button span {
-      font-size: 0.7rem;
-    }
-    /* --- Мобильная адаптация --- */
-    @media (max-width: 600px) {
-      .modules {
-        padding: 0.8rem 1rem;
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: 1fr;
       }
-      h1 {
-        font-size: 2.5rem;
-        margin: 1rem 0 0.5rem;
-      }
-      .course-name {
-        font-size: 1rem;
-        margin: 0 0 1.5rem;
-      }
-      .module {
-        padding: 1rem;
-        margin-bottom: 0.8rem;
-      }
-      .module h2 {
-        font-size: 1.1rem;
-      }
-      .module p {
-        font-size: 0.9rem;
-      }
-      .menu-button {
-        min-width: 100px;
-        padding: 0.5rem 0.7rem;
-      }
-      .menu-button i {
-        font-size: 1rem;
-      }
-      .menu-button span {
-        font-size: 0.65rem;
+      .menu-item {
+        font-size: 20px;
+        padding: 18px;
       }
     }
   </style>
 </head>
 <body>
-  <h1>AI</h1>
-  <div class="course-name">
-    Модули курса: нейросети, искусственный интеллект, анализ данных, практика, обучение, мобильность
-  </div>
-  <div class="modules">
-    <div class="module">
-      <h2>Нейросети</h2>
-      <p>Изучите основы и принципы работы современных нейросетей</p>
+  <div class="container">
+    <div class="header">
+      <h1>Нейросети и ИИ</h1>
     </div>
-    <div class="module">
-      <h2>Искусственный интеллект</h2>
-      <p>Познакомьтесь с технологиями и приложениями искусственного интеллекта</p>
+    <div class="grid">
+      <div class="card">Искусственный интеллект</div>
+      <div class="card">Анализ данных</div>
+      <div class="card">Практика</div>
+      <div class="card">Обучение</div>
+      <div class="card">Мобильность</div>
     </div>
-    <div class="module">
-      <h2>Анализ данных</h2>
-      <p>Освойте методы анализа и визуализации больших данных</p>
+    <div class="menu">
+      <a href="#" class="menu-item">Главная</a>
+      <a href="#" class="menu-item">Обучение</a>
+      <a href="#" class="menu-item">Сообщество</a>
+      <a href="#" class="menu-item">Чат</a>
     </div>
-    <div class="module">
-      <h2>Практика</h2>
-      <p>Практические задания и кейсы для закрепления знаний</p>
-    </div>
-    <div class="module">
-      <h2>Обучение</h2>
-      <p>Интерактивные уроки и поддержка кураторов</p>
-    </div>
-    <div class="module">
-      <h2>Мобильность</h2>
-      <p>Использование нейросетей на мобильных устройствах</p>
-    </div>
-  </div>
-  <div class="bottom-menu">
-    <div class="menu-row">
-      <a href="index.html" class="menu-button">
-        <i class="fas fa-home"></i>
-        <span>Главная</span>
-      </a>
-      <a href="#" class="menu-button">
-        <i class="fas fa-book"></i>
-        <span>Обучение</span>
-      </a>
-    </div>
-    <div class="menu-row">
-      <a href="#" class="menu-button">
-        <i class="fas fa-users"></i>
-        <span>Сообщество</span>
-      </a>
-      <a href="#" class="menu-button">
-        <i class="fas fa-comment"></i>
-        <span>Чат</span>
-      </a>
-    </div>
-    <div class="menu-row">
-      <a href="#" class="menu-button">
-        <i class="fas fa-chart-line"></i>
-        <span>Аналитика</span>
-      </a>
-      <a href="#" class="menu-button">
-        <i class="fas fa-cog"></i>
-        <span>Настройки</span>
-      </a>
-    </div>
-  </div>
-  <div class="ocean">
-    <div class="wave"></div>
-    <div class="wave wave-2"></div>
   </div>
 </body>
 </html>
