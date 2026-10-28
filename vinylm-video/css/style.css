@@ -1,0 +1,43 @@
+/* Brand tokens from vinyl-m.com (index.html): paper #f2eee6, ink #111, red #ff4a1c. Montserrat 900 display, Cormorant Garamond italic accents. */
+:root {
+  --paper: #f2eee6;
+  --paper-2: #e9e4d9;
+  --ink: #111111;
+  --red: #ff4a1c;
+  --red-2: #e63a0f;
+  --mut: #6f695d;
+  --line: rgba(17, 17, 17, .16);
+  --bg: var(--paper);
+  --text: var(--ink);
+  --accent: var(--red);
+  --vignette: rgba(17, 17, 17, .10);
+  --display: 'Montserrat', system-ui, sans-serif;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --mono: 'Montserrat', system-ui, sans-serif;
+}
+html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+body { -webkit-font-smoothing: antialiased; }
+#stage { position: relative; overflow: hidden; background: var(--paper); color: var(--ink); font-family: var(--display); }
+#debug { position: fixed; left: 10px; bottom: 8px; font: 600 20px/1 var(--mono); color: #0f0; z-index: 99; display: none; text-shadow: 0 0 3px #000; }
+body.debug #debug { display: block; }
+
+.abs { position: absolute; left: 0; top: 0; }
+.scene, .layer { position: absolute; inset: 0; overflow: hidden; }
+img { display: block; user-select: none; }
+svg { overflow: visible; display: block; }
+
+.kin { position: absolute; left: 0; top: 0; font: 900 200px/0.86 var(--display); letter-spacing: -0.035em; white-space: nowrap; text-transform: uppercase; }
+.ch { display: inline-block; will-change: transform; }
+.serif { font-family: var(--serif); font-style: italic; font-weight: 500; text-transform: none; letter-spacing: 0; }
+.red { color: var(--red); }
+.paper { color: var(--paper); }
+.outline { color: transparent; -webkit-text-stroke: 3px currentColor; }
+.caps { font: 700 30px/1 var(--display); letter-spacing: 0.22em; text-transform: uppercase; white-space: nowrap; }
+.pill { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 18px; border-radius: 999px; background: var(--ink); color: var(--paper); white-space: nowrap; }
+.pill i { display: grid; place-items: center; border-radius: 50%; background: var(--red); }
+.chip { position: absolute; left: 0; top: 0; white-space: nowrap; font: 800 36px/1 var(--display); letter-spacing: 0.12em; padding: 16px 26px 14px; background: var(--red); color: var(--paper); }
+.dark { background: var(--ink); color: var(--paper); }
+
+.vignette { position: absolute; inset: 0; pointer-events: none; z-index: 50; background: radial-gradient(ellipse 80% 75% at 50% 50%, transparent 60%, var(--vignette) 100%); }
+.flash { position: absolute; inset: 0; pointer-events: none; z-index: 60; background: #fff; opacity: 0; }
+.grid { background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); }
