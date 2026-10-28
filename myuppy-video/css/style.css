@@ -1,0 +1,47 @@
+/* Brand tokens taken from myuppy.com (css/neon.css): ground #04050a, neon #6ff3ff, violet #b7a4ff, chrome gradient. */
+:root {
+  --bg: #04050a;
+  --bg-2: #080a12;
+  --text: #eef2f8;
+  --accent: #6ff3ff;
+  --accent-2: #b7a4ff;
+  --muted: #8b95a5;
+  --line: rgba(206, 220, 240, .12);
+  --chrome: linear-gradient(115deg, #ffffff 0%, #d7dee9 18%, #7a8697 38%, #f4f7fb 52%, #8f9bad 68%, #dfe6f0 84%, #ffffff 100%);
+  --glow: rgba(111, 243, 255, .35);
+  --glow-2: rgba(111, 243, 255, .14);
+  --vignette: rgba(0, 0, 0, .55);
+  --display: 'Display', Impact, sans-serif;
+  --mono: 'Mono', Impact, sans-serif;
+}
+
+html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+body { -webkit-font-smoothing: antialiased; }
+#stage { position: relative; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--display); }
+#debug { position: fixed; left: 10px; bottom: 8px; font: 600 20px/1 var(--mono); color: #0f0; z-index: 99; display: none; text-shadow: 0 0 3px #000; }
+body.debug #debug { display: block; }
+
+.abs { position: absolute; left: 0; top: 0; }
+.scene, .layer { position: absolute; inset: 0; overflow: hidden; }
+img { display: block; user-select: none; }
+svg { overflow: visible; display: block; }
+
+/* Bebas has one weight and no italics: big words are plain caps, tight and tall */
+.kin { position: absolute; left: 0; top: 0; font: 400 200px/0.86 var(--display); letter-spacing: 0.005em; white-space: nowrap; text-transform: uppercase; }
+.ch { display: inline-block; will-change: transform; }
+.accent { color: var(--accent); }
+.violet { color: var(--accent-2); }
+.glow { text-shadow: 0 0 28px var(--glow), 0 0 90px var(--glow-2); }
+.outline { color: transparent; -webkit-text-stroke: 3px currentColor; }
+.chrome { background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+.caps { font: 400 34px/1 var(--display); letter-spacing: 0.28em; text-transform: uppercase; white-space: nowrap; }
+.pill { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 16px; border-radius: 999px; background: rgba(8, 10, 18, .92);
+  border: 1.5px solid var(--line); white-space: nowrap; color: var(--text); }
+.pill i { display: grid; place-items: center; border-radius: 50%; background: var(--accent); }
+.chip { position: absolute; left: 0; top: 0; white-space: nowrap; font: 400 40px/1 var(--display); letter-spacing: 0.08em; padding: 14px 28px 10px;
+  border: 2px solid var(--accent); color: var(--accent); background: rgba(4, 5, 10, .72); box-shadow: 0 0 30px rgba(111, 243, 255, .25); }
+
+.vignette { position: absolute; inset: 0; pointer-events: none; z-index: 50; background: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, var(--vignette) 100%); }
+.flash { position: absolute; inset: 0; pointer-events: none; z-index: 60; background: #fff; opacity: 0; }
+.grid { background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); }
+.screen { mix-blend-mode: screen; }
