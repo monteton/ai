@@ -44,7 +44,7 @@ A.render(sfx, { lufs: -27, truePeak: -3, reverb: 'plate', delay: { beats: 0.75, 
 
 // voice (as recorded, levelled) + design sounds → the film's sound
 execFileSync('ffmpeg', ['-y', '-v', 'error', '-i', 'assets/voice.wav', '-i', sfx, '-filter_complex',
-  `[0:a]aresample=48000,aformat=channel_layouts=stereo,loudnorm=I=-15:TP=-2:LRA=8,apad=whole_dur=${DURATION}[v];[1:a]aresample=48000[s];[v][s]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.8[o]`,
+  `[0:a]aresample=48000,aformat=channel_layouts=stereo,loudnorm=I=-13:TP=-2:LRA=8,apad=whole_dur=${DURATION}[v];[1:a]aresample=48000[s];[v][s]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.7:level=disabled,apad=whole_dur=${DURATION},atrim=0:${DURATION}[o]`,
   '-map', '[o]', '-t', String(DURATION), '-ar', '48000', '-ac', '2', out], { stdio: 'inherit' });
 const m = execFileSync('ffmpeg', ['-v', 'info', '-nostats', '-i', out, '-af', 'ebur128=peak=true', '-f', 'null', '-'], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 console.log('wrote', out);

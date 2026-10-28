@@ -133,11 +133,14 @@ export async function build(ctx) {
   });
 
   // ---- front: the schedule board (bottom zone) ---------------------------------------------------------------------------------------------------------
-  const BX = 70, BY = 1196, BW = 940;
+  const BX = 70, BY = 1214, BW = 940;
   const board = el('div', 'abs', front);
+  // a white sheet under the board so it reads on the pale cardigan: sharp corners, a hairline
+  const sheet = el('div', 'abs', board);
+  Object.assign(sheet.style, { left: '-26px', top: '-26px', width: `${940 + 52}px`, height: '394px', background: 'rgba(255,255,255,.93)', border: '1.5px solid rgba(21,24,30,.2)', boxSizing: 'border-box', transformOrigin: '50% 100%' });
   // row A: the week strip, seven tiles
   const DAYS = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
-  const TW = 124, TG = 12, TH = 108;
+  const TW = 124, TG = 12, TH = 96;
   const tiles = DAYS.map((d, i) => {
     const box = el('div', 'abs', board);
     Object.assign(box.style, { width: `${TW}px`, height: `${TH}px`, border: `2px solid ${INK}33`, boxSizing: 'border-box', overflow: 'hidden' });
@@ -148,13 +151,13 @@ export async function build(ctx) {
     return { box, fill, txt, x: i * (TW + TG), lit: i === 0 ? WORDS[23][1] : i === 2 ? WORDS[25][1] : null };
   });
   // row B: two blocks, big numerals
-  const RY = TH + 22, RH = 250;
+  const RY = TH + 18, RH = 232;
   const blk = (x, w) => { const b_ = el('div', 'abs', board); Object.assign(b_.style, { width: `${w}px`, height: `${RH}px`, borderTop: `3px solid ${INK}`, boxSizing: 'border-box' }); b_.style.transformOrigin = '0 0'; return { b_, x, w }; };
   const B1 = blk(0, 450), B2 = blk(490, 450);
   const mkNum = (parent, text, fs, w) => { const box = maskBox(parent, w, fs * 0.98); const d = el('div', 'abs num', box, text); d.style.fontSize = `${fs}px`; d.style.color = INK; return { box, d, w: d.offsetWidth }; };
   const mkLab = (parent, text) => { const d = el('div', 'abs cap', parent, text); d.style.fontSize = '26px'; d.style.fontWeight = '800'; d.style.color = MUT; return d; };
-  const n1 = mkNum(B1.b_, '2×', 186, 450); const l1 = mkLab(B1.b_, 'в неделю');
-  const n2 = mkNum(B2.b_, '2 ч', 186, 450); const l2 = mkLab(B2.b_, 'по два часа');
+  const n1 = mkNum(B1.b_, '2×', 172, 450); const l1 = mkLab(B1.b_, 'в неделю');
+  const n2 = mkNum(B2.b_, '2 ч', 172, 450); const l2 = mkLab(B2.b_, 'по два часа');
 
   // ---- front: call to action (top zone) ------------------------------------------------------------------------------------------------------------------
   const cta = el('div', 'abs', front);
@@ -189,10 +192,10 @@ export async function build(ctx) {
     // group name ------------------------------------------------------------------------------------------------------------------------------------------------
     const lv = t >= CUE.group - 0.05 && t < CUE.nameOut + 0.45;
     const lout = ease.inCubic(clamp((t - CUE.nameOut) / 0.4));
-    set(lock, { vis: lv, x: 80, y: 238, o: 1 - lout });
+    set(lock, { vis: lv, x: 80, y: 268, o: 1 - lout });
     if (lv) {
       const w8 = W_(8), w10 = W_(10), w11 = W_(11);
-      set(tag, { x: 0, y: -10, o: appear(t, CUE.group, 0.12) });
+      set(tag, { x: 0, y: -20, o: appear(t, CUE.group, 0.12) });
       const y1 = 22, y2 = y1 + L1.h * 0.78, y3 = y2 + L2txt.h * 0.82;
       set(L1.box, { x: 0, y: y1, vis: true }); set(L1.d, { x: 0, y: L1.h * 1.05 * rise(t, w8.s - 0.08, 0.5) });
       L2bar.style.width = `${L2txt.w + 36}px`; L2bar.style.height = `${L2txt.h * 0.74}px`;
@@ -262,14 +265,15 @@ export async function build(ctx) {
     const bo = ease.inCubic(clamp((t - CUE.boardOut) / 0.4));
     set(board, { vis: bv, x: BX, y: BY + 30 * bo, o: 1 - bo });
     if (bv) {
+      set(sheet, { x: 0, y: 0, sy: ease.outExpo(clamp((t - (CUE.board - 0.2)) / 0.4)), o: 1 });
       // blocks (row B)
       const rb = ease.outExpo(clamp((t - (W_(15).s - 0.1)) / 0.45));
       set(B1.b_, { x: B1.x, y: RY, sx: ease.outExpo(clamp((t - (W_(15).s - 0.12)) / 0.4)), o: t < W_(15).s - 0.12 ? 0 : 1 });
-      set(n1.d, { x: 0, y: 190 * rise(t, W_(15).s - 0.06, 0.45) + 14, o: 1 });
+      set(n1.d, { x: 0, y: 180 * rise(t, W_(15).s - 0.06, 0.45) + 10, o: 1 });
       set(n1.box, { x: 0, y: 0 }); n1.box.style.top = '0px';
       set(l1, { x: 4, y: RH - 44, o: appear(t, W_(18).s - 0.08, 0.15) });
       set(B2.b_, { x: B2.x, y: RY, sx: ease.outExpo(clamp((t - (CUE.hours - 0.12)) / 0.4)), o: t < CUE.hours - 0.12 ? 0 : 1 });
-      set(n2.d, { x: 0, y: 190 * rise(t, CUE.hours - 0.04, 0.45) + 14, o: 1 });
+      set(n2.d, { x: 0, y: 180 * rise(t, CUE.hours - 0.04, 0.45) + 10, o: 1 });
       set(l2, { x: 4, y: RH - 44, o: appear(t, W_(21).s - 0.08, 0.15) });
       // week strip (row A)
       tiles.forEach((q, i) => {
