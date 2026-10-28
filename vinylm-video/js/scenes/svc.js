@@ -115,7 +115,7 @@ export async function build(ctx) {
     const artFirst = sv.art === 'led';
     const artEarly = artFirst ? ART[sv.art](g) : null;
     // 1. the wall of words, behind: outline · solid · outline
-    const mid = mkWord(g, sv.word, 900, '', W * 0.96);
+    const mid = mkWord(g, sv.word, 900, '', W * (sv.word.length < 3 ? 0.78 : 0.96));
     mid.d.style.color = look.word;
     const up = mkWord(g, sv.word, mid.size, 'outline', W * 1.2);
     up.d.style.webkitTextStroke = `3px ${look.echo}`; up.d.style.color = 'transparent'; up.d.style.fontSize = mid.d.style.fontSize;

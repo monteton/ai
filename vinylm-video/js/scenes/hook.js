@@ -59,6 +59,10 @@ export async function build(ctx) {
   bolt.style.zIndex = '7';
   const fl = el('div', 'flash', root);
   fl.style.zIndex = '70';
+  const rule = el('div', 'abs', cam);
+  Object.assign(rule.style, { width: `${W * 0.8}px`, height: '10px', background: 'var(--red)', transformOrigin: '0 50%' });
+  const tick = el('div', 'abs', cam);
+  Object.assign(tick.style, { width: '6px', height: `${H}px`, background: 'var(--ink)', transformOrigin: '50% 0' });
   const hits = [CUE.w1, CUE.w2, CUE.w3];
 
   return (t) => {
@@ -67,6 +71,11 @@ export async function build(ctx) {
     if (!on) return;
     set(bg, { o: 1 });
 
+    // frame 1 already moves: a red rule draws across the middle while an ink line sweeps down, both give way to the first word
+    const rp0 = ease.outExpo(clamp((t - 0.03) / 0.4));
+    const burst = P(t, CUE.w1 - 0.04, CUE.w1 + 0.1, ease.outCubic);
+    set(rule, { x: W * 0.1, y: H * 0.47 - 5, sx: rp0, sy: 1 + burst * 3, o: t >= CUE.w1 + 0.1 ? 0 : 1 });
+    set(tick, { x: lerp(W * 0.22, W * 0.78, ease.inOutSine(clamp(t / CUE.w1))), y: 0, sy: ease.outExpo(clamp(t / 0.25)), o: t >= CUE.w1 ? 0 : 1 });
     lines.forEach((l, i) => {
       const s = slam(t, hits[i], { from: 1.5, dur: 0.22, overshoot: 0.05 });
       const wp = ease.outExpo(clamp((t - hits[i]) / 0.3));
@@ -83,9 +92,9 @@ export async function build(ctx) {
     // ink circle grows from the middle on beat 4 and holds until the whip
     const cp = ease.outExpo(clamp((t - CUE.disc) / 0.5));
     set(ink, { x: W / 2 - CIR / 2, y: H / 2 - CIR / 2, s: cp, o: t < CUE.disc ? 0 : 1 });
-    const rp = ease.outBackHard(clamp((t - (CUE.disc + 0.1)) / 0.5));
+    const rp = ease.outBackHard(clamp((t - (CUE.disc + 0.02)) / 0.45));
     const spin = (t - CUE.disc) * 360 * 2.2 * (1 / (1 + (t - CUE.disc) * 0.5));
-    set(rec, { x: W / 2 - REC_R - 20, y: H * 0.46 - REC_R - 20, s: rp * 1.3, r: spin, o: t < CUE.disc + 0.1 ? 0 : 1 });
+    set(rec, { x: W / 2 - REC_R - 20, y: H * 0.46 - REC_R - 20, s: rp * 1.3, r: spin, o: t < CUE.disc + 0.02 ? 0 : 1 });
     // the bolt strikes down onto the record on beat 5
     const bd = t - CUE.bolt;
     const bp = ease.outExpo(clamp(bd / 0.16));
