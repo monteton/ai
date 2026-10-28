@@ -1,0 +1,34 @@
+/* Strict and light: white ground, ink, one warm yellow (the colour of her cardigan) used as a marker. Montserrat for the voice of the
+   design, Cormorant Garamond italic for the one accent word per statement. */
+:root {
+  --paper: #ffffff;
+  --ink: #15181e;
+  --mut: #8a909a;
+  --line: rgba(21, 24, 30, .16);
+  --mark: #ffd84d;
+  --bg: #ffffff;
+  --text: var(--ink);
+  --accent: var(--mark);
+  --vignette: transparent;
+  --display: 'Montserrat', system-ui, sans-serif;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --mono: 'Montserrat', system-ui, sans-serif;
+}
+html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+body { -webkit-font-smoothing: antialiased; }
+#stage { position: relative; overflow: hidden; background: #fff; color: var(--ink); font-family: var(--display); }
+#debug { position: fixed; left: 10px; bottom: 8px; font: 600 20px/1 var(--mono); color: #0f0; z-index: 99; display: none; text-shadow: 0 0 3px #000; }
+body.debug #debug { display: block; }
+
+.abs { position: absolute; left: 0; top: 0; }
+.scene, .layer { position: absolute; inset: 0; overflow: hidden; }
+.free { overflow: visible; }
+img { display: block; user-select: none; }
+svg { overflow: visible; display: block; }
+
+.sans { font-family: var(--display); font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; white-space: nowrap; line-height: 0.9; }
+.serif { font-family: var(--serif); font-style: italic; font-weight: 600; white-space: nowrap; line-height: 0.9; letter-spacing: 0; }
+.cap { font: 700 24px/1 var(--display); letter-spacing: 0.22em; text-transform: uppercase; white-space: nowrap; }
+.num { font-family: var(--display); font-weight: 800; letter-spacing: -0.03em; line-height: 0.9; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
+.mark { background: var(--mark); }
+.vignette, .flash { display: none; }
