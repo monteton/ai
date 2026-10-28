@@ -6,7 +6,7 @@ import { CUE, S, FPS, CLIP, DURATION } from '../timeline.mjs';
 import { WORDS } from '../words.mjs';
 import { W, H } from '../kit.js';
 
-const INK = '#ffffff', MARK = '#ffd84d', MUT = 'rgba(255,255,255,.58)', HAIR = 'rgba(255,255,255,.30)', DK = '#0e1222';
+const INK = '#ffffff', MARK = '#ffd84d', MUT = 'rgba(255,255,255,.86)', HAIR = 'rgba(255,255,255,.30)', DK = '#0e1222';
 const FRAMES = Math.round(CLIP * 30); // 561 source frames
 const W_ = (i) => ({ t: WORDS[i][0], s: WORDS[i][1], e: WORDS[i][2] });
 
@@ -34,12 +34,15 @@ export async function build(ctx) {
   // ---- layer 1: the video; 2: behind; 3: the cutout; 4: in front -------------------------------------------------------------------------------
   const vid = el('img', 'abs', root);
   Object.assign(vid.style, { width: `${W}px`, height: `${H}px` });
-  vid.style.filter = 'brightness(.5) contrast(1.12) saturate(.55)';
-  const grade = el('div', 'layer', root);
-  grade.style.background = 'linear-gradient(180deg, rgba(8,12,30,.62) 0%, rgba(10,16,40,.34) 38%, rgba(10,16,40,.30) 62%, rgba(8,12,30,.62) 100%)';
+  // a light cinematic grade over the picture (video and cutout alike): a gentle S-curve, teal in the shadows, warm in the highlights
+  const lut = el('div', 'abs', root, `<svg width="0" height="0" style="position:absolute"><filter id="cinegrade" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+    <feComponentTransfer><feFuncR type="table" tableValues="0 .10 .24 .41 .59 .77 .91 1"/><feFuncG type="table" tableValues=".01 .12 .26 .42 .58 .74 .87 .98"/><feFuncB type="table" tableValues=".04 .15 .29 .43 .57 .71 .83 .94"/></feComponentTransfer>
+    <feColorMatrix type="saturate" values="1.06"/></filter></svg>`);
+  vid.style.filter = 'url(#cinegrade)';
   const behind = el('div', 'layer free', root);
+  behind.style.filter = 'drop-shadow(0 6px 16px rgba(0,0,0,.5)) drop-shadow(0 0 36px rgba(0,0,0,.28))';
   const person = el('img', 'abs', root);
-  Object.assign(person.style, { width: `${W}px`, height: `${H}px`, filter: 'drop-shadow(0 14px 34px rgba(0,0,0,.55)) drop-shadow(0 2px 6px rgba(0,0,0,.35))' });
+  Object.assign(person.style, { width: `${W}px`, height: `${H}px`, filter: 'url(#cinegrade)' });
   const front = el('div', 'layer free', root);
 
   vid.src = 'assets/footage/talk/00001.jpg'; person.src = 'assets/footage/talk-cut/00001.webp';
@@ -117,11 +120,12 @@ export async function build(ctx) {
   const CHUNKS = [[0, 3], [4, 5], [6, 7], [8, 11], [12, 14], [15, 18], [19, 21], [22, 25], [26, 29], [30, 31], [32, 35], [36, 38]];
   const SHOW_BOARD = [CUE.board - 0.1, CUE.boardOut]; // captions step aside while the schedule board builds
   const capBase = el('div', 'abs', front);
+  capBase.style.filter = 'drop-shadow(0 4px 12px rgba(0,0,0,.55)) drop-shadow(0 0 30px rgba(0,0,0,.3))';
   const caps = CHUNKS.map(([a, z]) => {
     const t0 = WORDS[a][1] - 0.06;
     let t1 = WORDS[z][2] + 0.2;
     const box = el('div', 'abs', capBase);
-    Object.assign(box.style, { width: '900px', textAlign: 'center', whiteSpace: 'normal', font: '800 58px/1.22 var(--display)', color: INK, letterSpacing: '-0.01em', textShadow: '0 2px 16px rgba(0,0,0,.5)' });
+    Object.assign(box.style, { width: '900px', textAlign: 'center', whiteSpace: 'normal', font: '800 58px/1.22 var(--display)', color: INK, letterSpacing: '-0.01em', textShadow: '0 1px 2px rgba(0,0,0,.7), 0 4px 14px rgba(0,0,0,.5)' });
     const hl = el('div', 'abs mark', box);
     const spans = [];
     for (let i = a; i <= z; i++) {
@@ -196,7 +200,6 @@ export async function build(ctx) {
     const z = zoomAt(t);
     const o = `${cam.x}px ${cam.y}px`;
     set(vid, { x: 0, y: 0, s: z, origin: o, o: 1 });
-    set(grade, { x: 0, y: 0, s: 1, o: 1 });
     set(person, { x: 0, y: 0, s: z, origin: o, o: 1 });
     set(behind, { x: 0, y: 0, s: 1 + (z - 1) * 0.35, origin: o });
     set(front, { x: 0, y: 0, o: 1 });
