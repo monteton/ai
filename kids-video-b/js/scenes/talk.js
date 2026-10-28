@@ -106,6 +106,61 @@ export async function build(ctx) {
   const chipQ = chip('Вопросы');
   const chipI = chip('Интерес');
 
+
+  // ---- pictograms: monoline, white with a yellow accent, drawn in code ---------------------------------------------------------------------------------
+  const NS = 'http://www.w3.org/2000/svg';
+  const svgBox = (parent, w, h) => { const d = el('div', 'abs', parent); d.innerHTML = `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="overflow:visible"></svg>`; return { d, s: d.firstChild, w, h }; };
+  const add = (s_, tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); s_.appendChild(e); return e; };
+  const LN = { fill: 'none', stroke: '#ffffff', 'stroke-width': 6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+  const draw = (e, len, k) => { e.style.strokeDasharray = String(len); e.style.strokeDashoffset = String(len * (1 - clamp(k))); };
+  const len = (e) => e.getTotalLength();
+  const star = (cx, cy, R, r) => { let d = ''; for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5; const rr = i % 2 ? r : R; d += (i ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ' ' + (cy + rr * Math.sin(a)).toFixed(1); } return d + 'Z'; };
+  // a person: head and shoulders, 100 × 140
+  const pictoPerson = (parent, scale) => {
+    const b_ = svgBox(parent, 100 * scale, 140 * scale);
+    const g = add(b_.s, 'g', { transform: `scale(${scale})` });
+    const head = add(g, 'circle', { cx: 50, cy: 32, r: 22, ...LN });
+    const body = add(g, 'path', { d: 'M12 130 C12 88 28 66 50 66 C72 66 88 88 88 130 Z', ...LN });
+    return { ...b_, parts: [head, body], lens: [len(head), len(body)] };
+  };
+  const drawPerson = (p_, k) => p_.parts.forEach((e, i) => draw(e, p_.lens[i], k));
+
+  // 1) «набор»: a person with a plus
+  const enroll = pictoPerson(behind, 1.75);
+  const plus = svgBox(behind, 60, 60);
+  add(plus.s, 'circle', { cx: 30, cy: 30, r: 28, fill: '#ffd84d' });
+  add(plus.s, 'path', { d: 'M30 16 V44 M16 30 H44', stroke: '#0e1222', 'stroke-width': 7, 'stroke-linecap': 'round' });
+
+  // 2) «Путь к одарённому ребёнку»: a child, a path with milestones, a star
+  const route = svgBox(behind, 300, 270);
+  const pathD = 'M70 246 C150 250, 70 160, 150 140 S250 120, 232 70';
+  const pathBase = add(route.s, 'path', { d: pathD, ...LN, 'stroke-opacity': 0.28, 'stroke-dasharray': '2 16' });
+  const pathLine = add(route.s, 'path', { d: pathD, ...LN, 'stroke-width': 7 });
+  const pathLen = len(pathLine);
+  const stops = [0.34, 0.66].map((k) => { const pt = pathLine.getPointAtLength(pathLen * k); const c = add(route.s, 'circle', { cx: pt.x, cy: pt.y, r: 11, fill: '#ffd84d', stroke: '#fff', 'stroke-width': 4 }); return { c, k }; });
+  const rays = Array.from({ length: 10 }, (_, i) => { const a = i * Math.PI / 5; return add(route.s, 'line', { x1: 232 + 50 * Math.cos(a), y1: 54 + 50 * Math.sin(a), x2: 232 + 70 * Math.cos(a), y2: 54 + 70 * Math.sin(a), stroke: '#ffd84d', 'stroke-width': 5, 'stroke-linecap': 'round' }); });
+  const starEl = add(route.s, 'path', { d: star(232, 54, 36, 15), fill: '#ffd84d', stroke: '#fff', 'stroke-width': 5, 'stroke-linejoin': 'round' });
+  const kid = pictoPerson(route.d, 0.62);
+  kid.d.style.left = '0px'; kid.d.style.top = '170px';
+
+  // 3) «Жду всех»: an adult and a child hand in hand
+  const pairBox = el('div', 'abs', behind);
+  const adult = pictoPerson(pairBox, 1.6);
+  const child = pictoPerson(pairBox, 1.08);
+  const hold = svgBox(pairBox, 60, 40); add(hold.s, 'path', { d: 'M4 20 Q30 40 56 20', ...LN, 'stroke-width': 5 });
+
+  // 4) «вопросы, интерес»: two speech bubbles
+  const bubble = (w, h) => { const b_ = svgBox(behind, w, h + 26); add(b_.s, 'path', { d: `M16 0 H${w - 16} Q${w} 0 ${w} 16 V${h - 16} Q${w} ${h} ${w - 16} ${h} H${w * 0.42} L${w * 0.28} ${h + 24} L${w * 0.3} ${h} H16 Q0 ${h} 0 ${h - 16} V16 Q0 0 16 0 Z`, ...LN, fill: 'rgba(14,18,34,.38)' }); return b_; };
+  const bq = bubble(190, 140); const bqText = el('div', 'abs serif', bq.d, '?'); Object.assign(bqText.style, { fontSize: '170px', lineHeight: '1', color: '#fff', left: '62px', top: '-14px' });
+  const bi = bubble(150, 110); add(bi.s, 'path', { d: star(75, 55, 30, 12), fill: '#ffd84d', stroke: '#fff', 'stroke-width': 4, 'stroke-linejoin': 'round' });
+
+  // 5) «пишите в директ»: a paper plane on a dotted curve
+  const flight = svgBox(behind, 420, 460);
+  const flightD = 'M20 440 C140 430, 120 220, 250 190 S400 90, 396 40';
+  const flightPath = add(flight.s, 'path', { d: flightD, fill: 'none', stroke: '#fff', 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-dasharray': '2 16', 'stroke-opacity': 0.8 });
+  const flightLen = len(flightPath);
+  const plane = svgBox(behind, 70, 70); add(plane.s, 'path', { d: 'M4 34 L66 6 L50 64 L36 42 Z M36 42 L66 6', fill: '#ffffff', stroke: '#fff', 'stroke-width': 4, 'stroke-linejoin': 'round' });
+
   // «с пяти до семи» → 17:00 — 19:00, set big in the top zone
   const timeG = el('div', 'abs', behind);
   const tCap = el('div', 'abs cap', timeG, 'Время'); tCap.style.fontSize = '26px'; tCap.style.fontWeight = '800'; tCap.style.color = MUT;
@@ -236,7 +291,7 @@ export async function build(ctx) {
     // «?» and the two marker words ----------------------------------------------------------------------------------------------------------------------------
     const qv = t >= CUE.ask - 0.1 && t < CUE.cta + 0.25;
     const qp = ease.outExpo(clamp((t - (CUE.ask - 0.05)) / 0.7));
-    set(qm, { vis: qv, x: W - qmW - 30, y: 150 + lerp(70, 0, qp), s: lerp(0.92, 1, qp), o: qv ? Math.min(qp, 1 - appear(t, CUE.cta - 0.1, 0.3)) * 0.92 : 0 });
+    set(qm, { vis: false, _: qv, x: W - qmW - 30, y: 150 + lerp(70, 0, qp), s: lerp(0.92, 1, qp), o: qv ? Math.min(qp, 1 - appear(t, CUE.cta - 0.1, 0.3)) * 0.92 : 0 });
     set(chipQ.box, { vis: qv, x: 84, y: 236, o: 1 - appear(t, CUE.cta - 0.1, 0.3) });
     set(chipI.box, { vis: qv, x: 84, y: 344, o: 1 - appear(t, CUE.cta - 0.1, 0.3) });
     if (qv) {
@@ -259,6 +314,64 @@ export async function build(ctx) {
       set(tB.box, { x: xb, y: 0 });
       set(tB.bar, { x: xb - 14, y: tB.h * 0.1, sx: ease.outExpo(clamp((t - W_(29).s + 0.12) / 0.4)), o: 1 });
       set(tB.d, { x: 0, y: tB.h * 1.05 * rise(t, W_(29).s - 0.08, 0.45), o: 1 });
+    }
+
+
+    // pictograms ------------------------------------------------------------------------------------------------------------------------------------------------------
+    {
+      // 1) enroll: 1.2 → 2.2
+      const ev = t >= CUE.kicker && t < CUE.group + 0.3;
+      const eo = 1 - appear(t, CUE.group - 0.1, 0.35);
+      set(enroll.d, { vis: ev, x: 800, y: 214, o: eo });
+      set(plus.d, { vis: ev, x: 940, y: 196, s: 1.3 * ease.outBackSoft(clamp((t - W_(5).s + 0.05) / 0.35)), o: t < W_(5).s - 0.05 ? 0 : eo });
+      if (ev) drawPerson(enroll, ease.inOutCubic(clamp((t - CUE.kicker) / 0.7)));
+      // 2) the way to the gifted child: 2.76 → 5.15
+      const rv = t >= W_(8).s - 0.1 && t < CUE.nameOut + 0.45;
+      const ro = 1 - ease.inCubic(clamp((t - CUE.nameOut) / 0.4));
+      set(route.d, { vis: rv, x: 690, y: 190, s: 1.28, origin: '0 0', o: ro });
+      if (rv) {
+        const k = ease.inOutCubic(clamp((t - (W_(8).s - 0.05)) / 0.95));
+        draw(pathLine, pathLen, k); pathBase.style.opacity = String(appear(t, W_(8).s - 0.1, 0.2));
+        stops.forEach((q) => { const p = ease.outBackSoft(clamp((t - (W_(8).s - 0.05 + 0.95 * 0.5 * q.k * 1.9)) / 0.3)); q.c.setAttribute('r', String(11 * p)); });
+        set(kid.d, { x: 0, y: 170 + 14 * rise(t, W_(11).s - 0.1, 0.4), o: appear(t, W_(11).s - 0.1, 0.15) });
+        drawPerson(kid, ease.inOutCubic(clamp((t - (W_(11).s - 0.1)) / 0.5)));
+        const sp = ease.outBackHard(clamp((t - (W_(11).s + 0.3)) / 0.45));
+        starEl.setAttribute('transform', `translate(232 54) scale(${sp}) translate(-232 -54)`);
+        const pulse = 1 + 0.07 * Math.sin((t - W_(11).s) * 5);
+        starEl.setAttribute('transform', `translate(232 54) scale(${sp * pulse}) translate(-232 -54)`);
+        rays.forEach((r_, i) => { const rp = clamp((t - (W_(11).s + 0.4 + i * 0.02)) / 0.35); r_.style.opacity = String(Math.sin(Math.min(1, rp) * Math.PI) * 0.95); });
+      }
+      // 3) «Жду всех»: 13.68 → 14.96
+      const pv = t >= W_(30).s - 0.05 && t < CUE.ask + 0.2;
+      const po = 1 - appear(t, CUE.ask - 0.12, 0.3);
+      set(pairBox, { vis: pv, x: 790, y: 215, o: po });
+      if (pv) {
+        const pp = ease.outExpo(clamp((t - (W_(30).s + 0.05)) / 0.5));
+        set(adult.d, { x: 0 + 40 * (1 - pp), y: 0, o: pp });
+        set(child.d, { x: 165 + 60 * (1 - pp), y: 62, o: appear(t, W_(31).s - 0.1, 0.2) });
+        set(hold.d, { x: 128, y: 150, s: 0.9, origin: '0 0', o: appear(t, W_(31).s + 0.05, 0.2) });
+        drawPerson(adult, ease.inOutCubic(clamp((t - (W_(30).s)) / 0.6)));
+        drawPerson(child, ease.inOutCubic(clamp((t - (W_(31).s - 0.1)) / 0.5)));
+      }
+      // 4) questions: 14.96 → 17.3
+      const bv = t >= W_(34).s - 0.1 && t < CUE.cta + 0.25;
+      const bo2 = 1 - appear(t, CUE.cta - 0.1, 0.3);
+      const b1 = ease.outBackSoft(clamp((t - (W_(34).s - 0.05)) / 0.4));
+      const b2 = ease.outBackSoft(clamp((t - (W_(35).s - 0.05)) / 0.4));
+      set(bq.d, { vis: bv, x: 660, y: 190 + 20 * (1 - b1), s: 1.35 * b1, origin: '40% 100%', o: bo2 * clamp(b1 * 3) });
+      set(bi.d, { vis: bv, x: 870, y: 320 + 20 * (1 - b2), s: 1.35 * b2, origin: '40% 100%', o: bo2 * clamp(b2 * 3) });
+      // 5) the plane: 17.08 → 18.2
+      const fv = t >= CUE.cta - 0.05;
+      const fk = ease.inOutCubic(clamp((t - (CUE.cta - 0.05)) / 0.95));
+      set(flight.d, { vis: fv, x: 640, y: 292, o: 1 });
+      if (fv) {
+        flightPath.style.strokeDashoffset = String(-(t * 40));
+        const pt = flightPath.getPointAtLength(flightLen * fk);
+        const pt2 = flightPath.getPointAtLength(Math.min(flightLen, flightLen * fk + 4));
+        const ang = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI;
+        set(plane.d, { vis: true, x: 640 + pt.x - 35, y: 292 + pt.y - 35, r: ang + 20, s: 1.5, o: appear(t, CUE.cta - 0.05, 0.12) * (1 - ease.inCubic(clamp((fk - 0.92) / 0.08))) });
+        flight.d.style.opacity = String(1 - ease.inCubic(clamp((t - (CUE.cta + 1.1)) / 0.35)));
+      } else set(plane.d, { vis: false });
     }
 
     // captions ----------------------------------------------------------------------------------------------------------------------------------------------------------
