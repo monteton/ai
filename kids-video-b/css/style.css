@@ -32,3 +32,7 @@ svg { overflow: visible; display: block; }
 .num { font-family: var(--display); font-weight: 800; letter-spacing: -0.03em; line-height: 0.9; font-variant-numeric: tabular-nums lining-nums; white-space: nowrap; }
 .mark { background: rgba(255, 216, 77, .22); box-shadow: inset 0 -5px 0 #ffd84d; }
 .vignette, .flash { display: none; }
+
+/* shadows: white type needs a soft cast shadow to sit above the picture */
+.sans, .serif, .num, .cap { text-shadow: 0 2px 3px rgba(0, 0, 0, .55), 0 8px 30px rgba(0, 0, 0, .5); }
+.chip { box-shadow: 0 10px 30px rgba(0, 0, 0, .4); }

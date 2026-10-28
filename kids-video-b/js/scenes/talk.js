@@ -39,7 +39,7 @@ export async function build(ctx) {
   grade.style.background = 'linear-gradient(180deg, rgba(8,12,30,.62) 0%, rgba(10,16,40,.34) 38%, rgba(10,16,40,.30) 62%, rgba(8,12,30,.62) 100%)';
   const behind = el('div', 'layer free', root);
   const person = el('img', 'abs', root);
-  Object.assign(person.style, { width: `${W}px`, height: `${H}px` });
+  Object.assign(person.style, { width: `${W}px`, height: `${H}px`, filter: 'drop-shadow(0 14px 34px rgba(0,0,0,.55)) drop-shadow(0 2px 6px rgba(0,0,0,.35))' });
   const front = el('div', 'layer free', root);
 
   vid.src = 'assets/footage/talk/00001.jpg'; person.src = 'assets/footage/talk-cut/00001.webp';
@@ -141,7 +141,7 @@ export async function build(ctx) {
   const board = el('div', 'abs', front);
   // a white sheet under the board so it reads on the pale cardigan: sharp corners, a hairline
   const sheet = el('div', 'abs', board);
-  Object.assign(sheet.style, { left: '-26px', top: '-26px', width: `${940 + 52}px`, height: '394px', background: 'rgba(10,14,32,.46)', backdropFilter: 'blur(18px)', border: `1.5px solid ${HAIR}`, boxSizing: 'border-box', transformOrigin: '50% 100%' });
+  Object.assign(sheet.style, { left: '-26px', top: '-26px', width: `${940 + 52}px`, height: '394px', background: 'rgba(10,14,32,.50)', backdropFilter: 'blur(18px)', boxShadow: '0 24px 60px rgba(0,0,0,.45)', border: `1.5px solid ${HAIR}`, boxSizing: 'border-box', transformOrigin: '50% 100%' });
   // row A: the week strip, seven tiles
   const DAYS = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
   const TW = 92, TG = 26, TH = 92;
@@ -181,7 +181,7 @@ export async function build(ctx) {
   // ---- front: call to action (top zone) ------------------------------------------------------------------------------------------------------------------
   const cta = el('div', 'abs', front);
   const ctaW = 760, ctaH = 132;
-  Object.assign(cta.style, { width: `${ctaW}px`, height: `${ctaH}px`, background: '#ffffff', borderRadius: `${ctaH / 2}px`, overflow: 'hidden', transformOrigin: '50% 50%' });
+  Object.assign(cta.style, { width: `${ctaW}px`, height: `${ctaH}px`, background: '#ffffff', boxShadow: '0 18px 48px rgba(0,0,0,.5)', borderRadius: `${ctaH / 2}px`, overflow: 'hidden', transformOrigin: '50% 50%' });
   const ctaTxt = el('div', 'abs', cta, 'Пишите в директ');
   Object.assign(ctaTxt.style, { font: '800 56px/1 var(--display)', color: DK, letterSpacing: '-0.01em', whiteSpace: 'nowrap', left: '56px', top: `${ctaH / 2 - 29}px` });
   const ctaIcon = el('div', 'abs', cta, '<svg width="64" height="64" viewBox="0 0 24 24"><path d="M3 11.5L21 4l-5 17-4-7-9-2.5z" fill="#0e1222"/></svg>');
